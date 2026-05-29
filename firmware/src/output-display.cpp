@@ -72,3 +72,48 @@ void OutputDisplay::beepDash() {
     delay(400);
     noTone(BUZZER_PIN);
 }
+
+/*
+    OUTPUT DISPLAY OVERVIEW
+
+    This class manages all visual and audio feedback for the Morse code system.
+    It controls the LCD display, LED indicators, and buzzer sounds to provide
+    real-time feedback while Morse code is being entered and decoded.
+
+    MAIN FEATURES:
+    - Displays decoded text on the LCD screen.
+    - Displays the current Morse sequence being entered.
+    - Blinks an LED for dots and dashes.
+    - Plays buzzer tones for dots and dashes.
+
+    FUNCTION OVERVIEW:
+    - init()
+        Initializes the LED, buzzer, and LCD display.
+        Shows a startup message when the system begins.
+
+    - showSymbol(char symbol)
+        Handles Morse symbol input.
+        Updates LED/buzzer feedback and displays the current Morse sequence.
+
+    - showLetter(char letter)
+        Adds a decoded character to the displayed text
+        and clears the temporary Morse sequence.
+
+    - newWord()
+        Inserts a space into the displayed text to separate words.
+
+    - blinkDot() / blinkDash()
+        Controls LED timing for Morse code visualization.
+
+    - beepDot() / beepDash()
+        Generates audio tones matching Morse timing rules.
+
+    MORSE TIMING:
+    - Dot duration  = short signal (150 ms)
+    - Dash duration = long signal (400 ms)
+
+    NOTES:
+    - LCD line 1 displays decoded text.
+    - LCD line 2 displays the active Morse sequence.
+    - Delays are used for timing and temporarily block execution.
+*/
