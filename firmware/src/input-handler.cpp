@@ -82,3 +82,30 @@ bool InputHandler::isWordComplete() {
     }
     return false;
 }
+
+/*
+    INPUT HANDLER OVERVIEW
+
+    This class handles button input for Morse code detection using timing-based logic.
+    It detects whether a button press represents a dot or dash and determines when
+    letters or words are complete based on pauses between presses.
+
+    TIMING RULES:
+    - Short press (< DOT_THRESHOLD)  = dot (.)
+    - Long press (>= DOT_THRESHOLD) = dash (-)
+    - Pause > LETTER_GAP            = end of letter
+    - Pause > WORD_GAP              = end of word
+
+    MAIN FUNCTIONS:
+    - init() initializes the input pin and resets internal state.
+    - update() continuously monitors button state changes and timing.
+    - handleRelease() converts press duration into Morse symbols.
+    - hasNewSymbol() checks if a new symbol is available.
+    - getSymbol() returns the detected symbol and clears the flag.
+    - isLetterComplete() checks if a letter pause was detected.
+    - isWordComplete() checks if a word pause was detected.
+
+    NOTES:
+    - INPUT_PULLUP is used, so the button is active LOW.
+    - Debounce timing is defined but currently not implemented.
+*/
