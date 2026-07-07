@@ -1,5 +1,10 @@
 # Morse Code Console Interpreter
 
+![C++](https://img.shields.io/badge/C++-17-00599C?logo=cplusplus)
+![Platform](https://img.shields.io/badge/Platform-Console-lightgrey)
+![Build](https://img.shields.io/badge/Build-g++-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+
 A simple C++ console-based Morse code interpreter that converts dot/dash input into readable text in real time.
 
 The project is structured as a small pipeline:
