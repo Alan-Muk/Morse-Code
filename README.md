@@ -5,141 +5,365 @@
 ![Build](https://img.shields.io/badge/Build-g++-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-A simple C++ console-based Morse code interpreter that converts dot/dash input into readable text in real time.
+A modular C++ console application that decodes Morse code input into readable text.
 
-The project is structured as a small pipeline:
+The project demonstrates fundamental software engineering concepts including:
 
-InputHandler → MorseDecoder → OutputDisplay
-
----
-
-## Features
-
-- Real-time Morse input via console
-- Dot (`.`) and dash (`-`) symbol entry
-- Letter separation using space (` `)
-- Word separation using slash (`/`)
-- Live decoded output display
-- Simple modular architecture
+- modular architecture
+- input processing
+- state management
+- lookup-based decoding
+- separation of responsibilities
 
 ---
 
-## Controls
+# Overview
 
-| Input | Meaning        |
-|------|----------------|
-| `.`  | Dot            |
-| `-`  | Dash           |
-| ` `  | End of letter  |
-| `/`  | End of word    |
-| `q`  | Quit program   |
+Morse Code Console Interpreter converts dot and dash sequences into text through a simple decoding pipeline.
 
----
+The system flow:
 
-## Project Structure
+```text
+User Input
 
-/src
-  main.cpp
-  input-handler.cpp
-  morse-decoder.cpp
-  output-display.cpp
+     ↓
 
-/include
-  input-handler.h
-  morse-decoder.h
-  output-display.h
+Input Handler
 
----
+     ↓
 
-## Components
+Morse Decoder
 
-### InputHandler
-Reads user input from the console and converts it into Morse events:
-- symbols (`.` or `-`)
-- letter endings
-- word endings
+     ↓
+
+Output Display
+```
+
+The application processes Morse symbols in real time and builds decoded messages interactively.
 
 ---
 
-### MorseDecoder
-Converts Morse sequences into characters using a lookup table.
+# Features
+
+## Morse Input Processing
 
 Supports:
-- A–Z decoding
-- Unknown sequences return `?`
+
+- Dot (`.`) input
+- Dash (`-`) input
+- Letter separation
+- Word separation
+
+Controls:
+
+| Input | Action |
+|---|---|
+| `.` | Add dot symbol |
+| `-` | Add dash symbol |
+| ` ` | Decode current letter |
+| `/` | Insert word separator |
+| `q` | Exit application |
 
 ---
 
-### OutputDisplay
-Handles console output and maintains:
-- decoded text
-- current Morse sequence being built
+## Decoder System
 
-Displays:
-- incoming symbols
-- decoded letters
-- word separators
+The decoder converts Morse sequences into characters using a lookup table.
 
----
+Supported:
 
-## Build Instructions
+- Alphabet characters (A-Z)
+- Unknown sequence handling
 
-### Using g++
+Example:
 
-g++ -std=c++17 main.cpp input-handler.cpp morse-decoder.cpp output-display.cpp -o morse
-
----
-
-### Run
-
-./morse
-
----
-
-## Example Usage
-
+```text
 Input:
-.-
-.
+
+....
 
 Output:
-Letter: A | Text: A  
-Letter: E | Text: AE  
+
+H
+```
 
 ---
 
-## Design Notes
+## Modular Architecture
 
-This project is intentionally simple and educational. It demonstrates:
+The application follows a simple pipeline architecture:
 
-- Modular C++ design
-- Basic event-driven input flow
-- State-based decoding logic
-- Separation of concerns across components
+```text
+InputHandler
 
----
+      ↓
 
-## Limitations
+MorseDecoder
 
-- Console-based input only (requires Enter key)
-- No timing-based Morse detection (manual separation only)
-- No punctuation or number support
-- Blocking input loop
-- Minimal error handling
+      ↓
 
----
+OutputDisplay
+```
 
-## Future Improvements
-
-- Timing-based Morse input (real keypress duration decoding)
-- Non-blocking input (real-time capture)
-- Full Morse table (numbers + punctuation)
-- GUI version
-- FSM-based decoder instead of string matching
-- Unit tests for decoder logic
+Each component has a dedicated responsibility.
 
 ---
 
-## License
+# Architecture
 
-This project is open for learning and experimentation.
+## InputHandler
+
+Responsible for:
+
+- reading console input
+- detecting Morse symbols
+- identifying letter boundaries
+- identifying word boundaries
+
+Produces structured input events for the decoder.
+
+---
+
+## MorseDecoder
+
+Responsible for:
+
+- Morse lookup
+- symbol translation
+- character generation
+
+Example:
+
+```text
+.-
+
+↓
+
+A
+```
+
+Unknown patterns return:
+
+```text
+?
+```
+
+---
+
+## OutputDisplay
+
+Responsible for:
+
+- displaying decoded characters
+- maintaining current output text
+- showing decoding progress
+
+---
+
+# Project Structure
+
+```text
+morse-code-interpreter/
+
+├── src/
+│
+│   ├── main.cpp
+│   ├── input-handler.cpp
+│   ├── morse-decoder.cpp
+│   └── output-display.cpp
+│
+├── include/
+│
+│   ├── input-handler.h
+│   ├── morse-decoder.h
+│   └── output-display.h
+│
+└── README.md
+```
+
+---
+
+# Data Flow
+
+```text
+Console Input
+
+".-"
+
+ ↓
+
+InputHandler
+
+ ↓
+
+Morse Sequence
+
+".-"
+
+ ↓
+
+MorseDecoder
+
+ ↓
+
+Character
+
+"A"
+
+ ↓
+
+OutputDisplay
+
+ ↓
+
+Decoded Message
+```
+
+---
+
+# Example Usage
+
+Input:
+
+```text
+.- 
+.
+```
+
+Output:
+
+```text
+Letter: A
+Letter: E
+
+Text: AE
+```
+
+---
+
+# Build Instructions
+
+## Compile
+
+Using g++:
+
+```bash
+g++ -std=c++17 \
+main.cpp \
+input-handler.cpp \
+morse-decoder.cpp \
+output-display.cpp \
+-o morse
+```
+
+---
+
+## Run
+
+```bash
+./morse
+```
+
+---
+
+# Engineering Concepts Demonstrated
+
+This project demonstrates:
+
+- object-oriented C++ design
+- modular component architecture
+- state-based processing
+- event-driven input handling
+- lookup table algorithms
+- separation of concerns
+
+---
+
+# Design Decisions
+
+## Component Separation
+
+The application separates:
+
+```text
+Input
+
+↓
+
+Processing
+
+↓
+
+Output
+```
+
+This makes each component easier to:
+
+- test
+- modify
+- extend
+
+---
+
+## Lookup-Based Decoding
+
+Morse patterns are mapped using a lookup structure rather than complex conditional logic.
+
+Benefits:
+
+- simple implementation
+- fast character lookup
+- easy extension
+
+---
+
+# Limitations
+
+Current limitations:
+
+- console-only interface
+- manual letter separation
+- no timing-based Morse detection
+- limited character support
+- blocking input loop
+
+---
+
+# Future Improvements
+
+## Input System
+
+- real-time keyboard capture
+- timing-based Morse recognition
+- Morse key support
+
+## Decoder
+
+- numbers support
+- punctuation support
+- configurable Morse mappings
+- finite state machine decoder
+
+## Application
+
+- graphical interface
+- audio Morse input
+- unit testing framework
+- cross-platform packaging
+
+---
+
+# What This Project Demonstrates
+
+This project demonstrates foundational engineering skills:
+
+- writing maintainable C++ code
+- designing small modular systems
+- handling user input states
+- building reusable processing pipelines
+
+---
+
+# License
+
+MIT License
